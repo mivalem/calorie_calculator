@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Калькулятор калорий</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>Калькулятор суточной нормы калорий</h1>
+
+        <form method="post">
+            <label>Пол</label>
+            <select name="gender" required>
+                <option value="female" {% if form_data.gender=='female' %}selected{% endif %}>Женщина</option>
+                <option value="male" {% if form_data.gender=='male' %}selected{% endif %}>Мужчина</option>
+            </select>
+
+            <label>Вес (кг)</label>
+            <input type="number" name="weight" required value="{{ form_data.weight }}">
+
+            <label>Рост (см)</label>
+            <input type="number" name="height" required value="{{ form_data.height }}">
+
+            <label>Возраст</label>
+            <input type="number" name="age" required value="{{ form_data.age }}">
+
+            <label>Активность</label>
+            <select name="activity">
+                <option value="1.2" {% if form_data.activity=='1.2' %}selected{% endif %}>Сидячий образ жизни</option>
+                <option value="1.3" {% if form_data.activity=='1.3' %}selected{% endif %}>До 3 тренировок в неделю
+                </option>
+                <option value="1.6" {% if form_data.activity=='1.6' %}selected{% endif %}>3–5 тренировок в неделю
+                </option>
+                <option value="1.7" {% if form_data.activity=='1.7' %}selected{% endif %}>Каждый день</option>
+                <option value="1.9" {% if form_data.activity=='1.9' %}selected{% endif %}>Очень высокая активность
+                </option>
+            </select>
+
+            {% if not result %}
+            <button type="submit">Рассчитать</button>
+            {% else %}
+            <button type="submit" name="reset" value="1">
+                Рассчитать заново
+            </button>
+            {% endif %}
+        </form>
+
+        {% if result %}
+        <div class="result">
+            {{ result }} ккал в день
+        </div>
+        {% endif %}
+
+    </div>
+</body>
+
+</html>
